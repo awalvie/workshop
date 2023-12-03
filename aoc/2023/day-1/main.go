@@ -5,6 +5,7 @@ import (
 	"log/slog"
 	"os"
 	"strconv"
+	"strings"
 )
 
 // ParseInput parses the input file and returns a slice of strings
@@ -34,7 +35,7 @@ func ParseInput() []string {
 	return lines
 }
 
-func main() {
+func One() int {
 	// Parse input file
 	lines := ParseInput()
 
@@ -63,5 +64,78 @@ func main() {
 		sum += number
 	}
 
-	slog.Info("Sum: " + strconv.Itoa(sum))
+	return sum
+
+}
+
+func Two() int {
+	// Parse input file
+	lines := ParseInput()
+
+	// Initialize variables
+	sum := 0
+
+	// Iterate over each line
+	for _, line := range lines {
+		first := 0
+		last := 0
+		var ok bool
+
+		// Find the first number in the string
+		for i := 0; i < len(line); i++ {
+			if first, ok = Find(line[i:]); ok {
+				first = first * 10
+				break
+			}
+		}
+
+		// Find the last number in the string
+		for i := len(line) - 1; i >= 0; i-- {
+			if last, ok = Find(line[i:]); ok {
+				break
+			}
+		}
+
+		// Add to the sum
+		sum += first + last
+	}
+
+	return sum
+}
+
+func Find(s string) (int, bool) {
+	switch {
+	case s[0] >= '0' && s[0] <= '9':
+		return int(s[0] - '0'), true
+	case strings.HasPrefix(s, "one"):
+		return 1, true
+	case strings.HasPrefix(s, "two"):
+		return 2, true
+	case strings.HasPrefix(s, "three"):
+		return 3, true
+	case strings.HasPrefix(s, "four"):
+		return 4, true
+	case strings.HasPrefix(s, "five"):
+		return 5, true
+	case strings.HasPrefix(s, "six"):
+		return 6, true
+	case strings.HasPrefix(s, "seven"):
+		return 7, true
+	case strings.HasPrefix(s, "eight"):
+		return 8, true
+	case strings.HasPrefix(s, "nine"):
+		return 9, true
+	case strings.HasPrefix(s, "zero"):
+		return 0, true
+	default:
+		return 0, false
+	}
+}
+
+func main() {
+	// Run the first part of the challenge
+	slog.Info("Part One: " + strconv.Itoa(One()))
+
+	// Run the second part of the challenge
+	slog.Info("Part Two: " + strconv.Itoa(Two()))
 }
