@@ -7,4 +7,14 @@ layout:
 - go.kubebuilder.io/v4
 projectName: kontroller
 repo: foo.bar/kontroller
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  controller: true
+  domain: foo.bar
+  group: batch
+  kind: CronJob
+  path: foo.bar/kontroller/api/v1
+  version: v1
 version: "3"
