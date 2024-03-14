@@ -2,6 +2,7 @@ package main
 
 import (
 	"net"
+	"os"
 	"path/filepath"
 	"strconv"
 
@@ -18,12 +19,15 @@ func init() {
 		return filepath.Base(file) + ":" + strconv.Itoa(line)
 	}
 	log.Logger = log.With().Caller().Logger()
+
+	// Colorize output for terminal
+	log.Logger = log.Output(zerolog.ConsoleWriter{Out: os.Stderr})
 }
 
 func main() {
 	// Initialize TCP Server
 	addr := "localhost:7000"
-	log.Info().Msgf("Starting TCP Server on %s", addr)
+	log.Info().Msgf("starting tcp server on %s", addr)
 	l, err := net.Listen("tcp", addr)
 	if err != nil {
 		log.Fatal().Msgf("Error starting TCP Server: %s", err)
