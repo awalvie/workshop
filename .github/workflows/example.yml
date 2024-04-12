@@ -1,10 +1,23 @@
-name: Entropy
+name: entropy
 on:
   workflow_dispatch:
 
 jobs:
-  ephemeral-runner:
+  cadvisor:
     # You need to use the INSTALLATION_NAME from the previous step
     runs-on: self-hosted
     steps:
-    - run: echo "This job uses runner scale set runners!"
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run CPU-intensive script
+        run: |
+          while true; do
+              # Perform some CPU-intensive task
+              for ((i = 0; i < 1000000; i++)); do
+                  result=$((result + i * i))
+              done
+
+              # Simulate some I/O-bound task to avoid total CPU hogging
+              sleep 0.1
+          done
