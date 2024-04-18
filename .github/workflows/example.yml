@@ -7,5 +7,7 @@ jobs:
     # You need to use the INSTALLATION_NAME from the previous step
     runs-on: self-hosted
     steps:
+      - name: Dump github context
+        run: echo "$GITHUB_CONTEXT"
       - name: Run stress-ng test
         run: docker run --rm ghcr.io/colinianking/stress-ng --cpu 2 --vm-bytes 2G --timeout 3h
