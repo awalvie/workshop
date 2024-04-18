@@ -8,4 +8,4 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Run stress-ng test
-        run: docker run --label job=${{ github.job }} --label workflow=${{ github.workflow }} --rm ghcr.io/colinianking/stress-ng --cpu 1 --vm-bytes 256M --timeout 3h
+        run: docker run --label job=$GITHUB_WORKFLOW --label workflow=$GITHUB_JOB --rm ghcr.io/colinianking/stress-ng --cpu 1 --vm-bytes 256M --timeout 3h
